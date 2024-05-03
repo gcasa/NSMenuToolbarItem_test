@@ -7,7 +7,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+NSToolbarItemIdentifier menuToolbarItemIdentifier = @"menuItemIdentifier";
+
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSToolbarDelegate>
 
 
 @end

@@ -16,6 +16,12 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    NSToolbar *toolbar = [[NSToolbar alloc] init];
+
+    [toolbar setDelegate: self];
+    [toolbar insertItemWithItemIdentifier:menuToolbarItemIdentifier atIndex:0];
+    
+    [self.window setToolbar: toolbar];
 }
 
 
@@ -28,5 +34,28 @@
     return YES;
 }
 
+// Toolbar delegate
+- (NSArray<NSToolbarItemIdentifier> *) toolbarAllowedItemIdentifiers: (NSToolbar *)toolbar
+{
+    return [NSArray arrayWithObject: menuToolbarItemIdentifier];
+}
+
+- (NSArray<NSToolbarItemIdentifier> *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
+{
+    return [NSArray arrayWithObject: menuToolbarItemIdentifier];
+}
+
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
+{
+    NSMenuToolbarItem *item = [[NSMenuToolbarItem alloc] initWithItemIdentifier: itemIdentifier];
+    
+    NSMenu *testMenu = [[NSMenu alloc] initWithTitle: @"Test Menu"];
+    NSMenuItem *item0 = [[NSMenuItem alloc] initWithTitle: @"Item 0" action: NULL keyEquivalent: @""];
+    [testMenu addItem: item0];
+    
+    [item setMenu: testMenu];
+    
+    return item;
+}
 
 @end
