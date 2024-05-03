@@ -20,6 +20,11 @@
 
     [toolbar setDelegate: self];
     [toolbar insertItemWithItemIdentifier:menuToolbarItemIdentifier atIndex:0];
+
+    NSLog(@"toolbar = %@", toolbar);
+    NSLog(@"window = %@", self.window);
+
+    [toolbar setVisible: YES];
     
     [self.window setToolbar: toolbar];
 }
