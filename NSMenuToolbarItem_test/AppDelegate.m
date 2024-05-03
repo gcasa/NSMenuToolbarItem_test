@@ -37,25 +37,30 @@
 // Toolbar delegate
 - (NSArray<NSToolbarItemIdentifier> *) toolbarAllowedItemIdentifiers: (NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObject: menuToolbarItemIdentifier];
+    return [NSArray arrayWithObjects: menuToolbarItemIdentifier, NSToolbarPrintItemIdentifier, nil];
 }
 
 - (NSArray<NSToolbarItemIdentifier> *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
-    return [NSArray arrayWithObject: menuToolbarItemIdentifier];
+    return [NSArray arrayWithObjects: menuToolbarItemIdentifier, NSToolbarPrintItemIdentifier, nil];
 }
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSToolbarItemIdentifier)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
-    NSMenuToolbarItem *item = [[NSMenuToolbarItem alloc] initWithItemIdentifier: itemIdentifier];
+    if ([itemIdentifier isEqual: menuToolbarItemIdentifier])
+    {
+        NSMenuToolbarItem *item = [[NSMenuToolbarItem alloc] initWithItemIdentifier: itemIdentifier];
+        
+        NSMenu *testMenu = [[NSMenu alloc] initWithTitle: @"Test Menu"];
+        NSMenuItem *item0 = [[NSMenuItem alloc] initWithTitle: @"Item 0" action: NULL keyEquivalent: @""];
+        [testMenu addItem: item0];
+        
+        [item setMenu: testMenu];
+        
+        return item;
+    }
     
-    NSMenu *testMenu = [[NSMenu alloc] initWithTitle: @"Test Menu"];
-    NSMenuItem *item0 = [[NSMenuItem alloc] initWithTitle: @"Item 0" action: NULL keyEquivalent: @""];
-    [testMenu addItem: item0];
-    
-    [item setMenu: testMenu];
-    
-    return item;
+    return [[NSToolbarItem alloc] initWithItemIdentifier: NSToolbarPrintItemIdentifier];
 }
 
 @end
